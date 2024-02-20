@@ -1,0 +1,25 @@
+#!/bin/bash
+
+VOLUME_DOWN_SCRIPT="amixer set Master 2%-"
+VOLUME_UP_SCRIPT="amixer set Master 2%+"
+MUTE_SCRIPT="amixer set Master 0%"
+
+adjust_volume() {
+	if [[ $1 == "down" ]]; then
+		$VOLUME_DOWN_SCRIPT
+	elif [[ $1 == "up" ]]; then
+		$VOLUME_UP_SCRIPT
+	elif [[ $1 = "mute" ]]; then
+		$MUTE_SCRIPT
+	fi
+}
+
+acpi_listen | while IFS= read -r line; do
+	if [[ $line == "button/volumedown VOLDN "* ]]; then
+		adjust_volume "down"
+	elif [[ $line == "button/volumeup VOLUP "* ]]; then
+		adjust_volume "up"
+	elif [[ $line == "button/mute MUTE"* ]]; then
+		adjust_volume "mute"
+	fi
+done

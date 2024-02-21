@@ -9,4 +9,9 @@ xwallpaper --zoom $wall
 wal -c
 wal -i $wall
 
-xdotool key super+F5
+# xdotool key super+F5
+
+# restart picom
+pkill picom
+picom &
+

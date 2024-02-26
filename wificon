@@ -1,0 +1,20 @@
+#!/bin/sh
+
+bssid=$(nmcli device wifi list | sed -n '1!p' | cut -b 9- | dmenu -p "Select Wifi : " -l 20 | cut -d' ' -f1)
+echo $bssid
+if [[ "$bssid"=="7A:E2:D1:23:A8:2C" ]]
+then
+	echo "Connecting to Rushi"
+	nmcli device wifi connect Rushi
+elif [[ "$bssid"=="2E:EE:52:E9:89:44" ]]
+then
+	echo "Connecting to Stanza"
+	nmcli device wifi connect STANZA_SPECTRA
+elif [[ "$bssid"=="stanza" ]]
+then
+	echo "Connecting to STANZA_SPECTRA"
+	nmcli device wifi connect STANZA_SPECTRA
+else
+	pass=$(echo "" | dmenu -p "Enter password :")
+	nmcli device wifi connect "$bssid" pasword $pass
+fi

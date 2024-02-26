@@ -1,0 +1,6 @@
+brightnessctl set 10%+
+
+brightness=$(cat /sys/class/backlight/amdgpu_bl1/actual_brightness)
+percentage=$(echo "$brightness * 100" | bc)
+percentage=$(echo "$percentage / 255" | bc)
+dunstify -p -r 1001 "Brightness Increased" "Brightness: $percentage%" -t 1000

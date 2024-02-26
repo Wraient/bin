@@ -1,0 +1,16 @@
+
+#!/bin/bash
+
+status=$(bluetoothctl <<< "show" | grep "Powered" | cut -d' ' -f2)
+
+if [ "$status" == "yes" ]; then
+    bluetoothctl_info=$(bluetoothctl info)
+    connected_device=$(echo "$bluetoothctl_info" | grep -oP "Name: \K(.*)")
+    if [ -z "$connected_device" ]; then
+        echo " " # not connected
+    else
+	echo " $connected_device"
+    fi
+else
+    echo " Bluetooth Off"
+fi

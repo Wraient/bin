@@ -1,0 +1,5 @@
+amixer set Master 0%
+
+percentage=$(amixer get Master | awk -F'[][]' '/Playback/ {print $2}' | tail -n 1)
+dunstify -p -r 1001 "Muted" "Volume: $percentage" -t 1000
+
